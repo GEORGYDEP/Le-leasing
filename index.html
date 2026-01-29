@@ -1,58 +1,2372 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L'Art de la Comptabilité</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Italiana&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f4e4bc;
-      background-image: url("https://www.transparenttextures.com/patterns/parchment.png");
-      font-family: 'Playfair Display', serif;
-    }
-    .renaissance-font {
-      font-family: 'Cinzel', serif;
-    }
-    .cursive-font {
-      font-family: 'Great+Vibes', cursive;
-    }
-    .italiana-font {
-      font-family: 'Italiana', serif;
-    }
-    /* Custom Scrollbar for parchment look */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #e4d4ac;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #8b5e3c;
-      border-radius: 5px;
-    }
-    .ink-text {
-      color: #1a2a3a;
-    }
-    .gold-border {
-      border: 4px double #b8860b;
-    }
-  </style>
-<script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3"
-  }
-}
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comptabilisation du Leasing Financier - Les 3 Étapes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-light: #14b8a6;
+            --primary-dark: #134e4a;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f97316;
+            
+            --year1: #3b82f6;
+            --year2: #8b5cf6;
+            --year3: #ec4899;
+            
+            --capital-color: #0ea5e9;
+            --interest-color: #f59e0b;
+            --total-color: #10b981;
+            
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-dark: #0f172a;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 50%, #f0fdf4 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar - Documents */
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .document-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .document-header {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 100%);
+            color: white;
+            padding: 0.875rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .document-header .icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .document-header h3 {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .document-body {
+            padding: 1rem;
+        }
+
+        /* Contrat de leasing */
+        .contract-content {
+            font-size: 0.8rem;
+        }
+
+        .contract-header {
+            text-align: center;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 0.75rem;
+        }
+
+        .contract-header .company {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .contract-header .address {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .contract-title {
+            background: var(--primary);
+            color: white;
+            padding: 0.4rem;
+            text-align: center;
+            font-weight: 600;
+            border-radius: 6px;
+            margin: 0.75rem 0;
+            font-size: 0.8rem;
+        }
+
+        .contract-parties {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .party {
+            padding: 0.6rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            font-size: 0.7rem;
+        }
+
+        .party-label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contract-details {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            border-bottom: 1px dashed var(--border);
+            align-items: center;
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+
+        .highlight-value {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        /* Tableau d'amortissement - Style compact */
+        .amort-table-container {
+            max-height: 350px;
+            overflow-y: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .amort-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+        }
+
+        .amort-table th {
+            background: var(--bg-dark);
+            color: white;
+            padding: 0.5rem 0.25rem;
+            text-align: center;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            font-size: 0.6rem;
+            letter-spacing: -0.02em;
+        }
+
+        .amort-table th.capital-header {
+            background: var(--capital-color);
+        }
+
+        .amort-table th.interest-header {
+            background: var(--interest-color);
+            color: var(--bg-dark);
+        }
+
+        .amort-table th.total-header {
+            background: var(--total-color);
+        }
+
+        .amort-table td {
+            padding: 0.35rem 0.2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.62rem;
+            white-space: nowrap;
+        }
+
+        .amort-table tr.year1 {
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .amort-table tr.year2 {
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        .amort-table tr.year3 {
+            background: rgba(236, 72, 153, 0.08);
+        }
+
+        .amort-table tr:hover {
+            background: rgba(15, 118, 110, 0.1);
+        }
+
+        .year-badge {
+            display: inline-block;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-size: 0.55rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .year-badge.y1 { background: var(--year1); }
+        .year-badge.y2 { background: var(--year2); }
+        .year-badge.y3 { background: var(--year3); }
+
+        .capital-cell {
+            color: var(--capital-color);
+            font-weight: 600;
+        }
+
+        .interest-cell {
+            color: #b45309;
+            font-weight: 600;
+        }
+
+        /* Legend */
+        .table-legend {
+            display: flex;
+            gap: 0.6rem;
+            padding: 0.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.65rem;
+        }
+
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+
+        /* Main Content */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Énoncé */
+        .enonce-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border-left: 5px solid var(--accent);
+        }
+
+        .enonce-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--bg-dark);
+            margin-bottom: 1rem;
+        }
+
+        .enonce-content {
+            color: #78350f;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Progress Steps */
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: #f1f5f9;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .progress-step:hover {
+            background: #e2e8f0;
+        }
+
+        .progress-step.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(15, 118, 110, 0.3);
+        }
+
+        .progress-step.completed {
+            background: var(--success);
+            color: white;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.1);
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .progress-step.active .step-number,
+        .progress-step.completed .step-number {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .step-label {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Step Section */
+        .step-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .step-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .step-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+
+        .step-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .step-body {
+            padding: 2rem;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--year1);
+        }
+
+        .explanation-box.highlight-capital {
+            border-left-color: var(--capital-color);
+            background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+        }
+
+        .explanation-box.highlight-interest {
+            border-left-color: var(--interest-color);
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .explanation-box h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            color: var(--bg-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .explanation-box p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Facture réaliste */
+        .invoice-container {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #c4b5fd;
+        }
+
+        .invoice-paper {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.05);
+            overflow: hidden;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .invoice-header-bar {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .invoice-company {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .invoice-company-details {
+            font-size: 0.7rem;
+            opacity: 0.9;
+        }
+
+        .invoice-number {
+            text-align: right;
+        }
+
+        .invoice-number .label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .invoice-number .number {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .invoice-body {
+            padding: 1.5rem;
+        }
+
+        .invoice-parties {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .invoice-party h5 {
+            font-size: 0.7rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .invoice-party p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .invoice-party strong {
+            color: var(--bg-dark);
+        }
+
+        .invoice-reference {
+            background: #f3f4f6;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .invoice-reference strong {
+            color: var(--secondary);
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .invoice-table th {
+            background: #f9fafb;
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .invoice-table th:last-child {
+            text-align: right;
+        }
+
+        .invoice-table td {
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .invoice-table td:last-child {
+            text-align: right;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 500;
+        }
+
+        .invoice-totals {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .invoice-total-row {
+            display: flex;
+            justify-content: space-between;
+            width: 200px;
+            font-size: 0.9rem;
+        }
+
+        .invoice-total-row.subtotal {
+            color: #6b7280;
+        }
+
+        .invoice-total-row.tax {
+            color: #6b7280;
+        }
+
+        .invoice-total-row.grand-total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--secondary);
+            padding-top: 0.5rem;
+            border-top: 2px solid var(--secondary);
+            margin-top: 0.25rem;
+        }
+
+        .invoice-total-row span:last-child {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .invoice-footer {
+            background: #f9fafb;
+            padding: 1rem 1.5rem;
+            font-size: 0.75rem;
+            color: #6b7280;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Mini Table for highlighting */
+        .mini-table-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .mini-table-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mini-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .mini-table th {
+            background: #f1f5f9;
+            padding: 0.6rem;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .mini-table td {
+            padding: 0.6rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .mini-table tr.highlighted {
+            background: linear-gradient(90deg, rgba(14, 165, 233, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%);
+            font-weight: 600;
+        }
+
+        .mini-table tr.sum-row {
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%);
+            font-weight: 700;
+        }
+
+        .mini-table .capital-cell {
+            color: var(--capital-color);
+            font-weight: 600;
+        }
+
+        .mini-table .interest-cell {
+            color: var(--interest-color);
+            font-weight: 600;
+        }
+
+        .arrow-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Calculation Box */
+        .calculation-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 2px dashed var(--border);
+        }
+
+        .calculation-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calculation-line {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .calc-label {
+            flex: 1;
+            color: var(--text-secondary);
+        }
+
+        .calc-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .calc-value.capital {
+            color: var(--capital-color);
+            background: rgba(14, 165, 233, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .calc-value.interest {
+            color: var(--interest-color);
+            background: rgba(245, 158, 11, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .calc-value.total {
+            color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .calc-result {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        /* Accounting Entry */
+        .accounting-entry {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin: 1.5rem 0;
+        }
+
+        .entry-header {
+            background: var(--bg-dark);
+            color: white;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .entry-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .entry-table th {
+            background: #f1f5f9;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .entry-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .entry-table input {
+            width: 100%;
+            padding: 0.6rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .entry-table input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+        }
+
+        .entry-table input.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .entry-table input.incorrect {
+            border-color: var(--error);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(15, 118, 110, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 118, 110, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #c2410c 100%);
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Feedback */
+        .feedback {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .feedback.show {
+            display: flex;
+        }
+
+        .feedback.success {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+
+        .feedback.error {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .feedback.info {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
+        /* Section divider for Step 3 */
+        .section-divider {
+            margin: 2.5rem 0;
+            border: none;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+        }
+
+        .sub-section {
+            background: #fafafa;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .sub-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .sub-section-title.reclassement {
+            color: var(--warning);
+        }
+
+        .sub-section-title.amortissement {
+            color: var(--success);
+        }
+
+        /* Completion Badge */
+        .completion-badge {
+            display: none;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            animation: celebrate 0.5s ease;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .completion-badge.show {
+            display: block;
+        }
+
+        .completion-badge .trophy {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .completion-badge h3 {
+            font-size: 1.5rem;
+            color: var(--bg-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .completion-badge p {
+            color: #78350f;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-container {
+                flex-direction: column;
+            }
+
+            .progress-step {
+                justify-content: center;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+    </style>
 </head>
 <body>
-  <div id="root"></div>
+    <!-- Header -->
+    <header class="header">
+        <h1>📋 Comptabilisation du Leasing Financier</h1>
+        <p>Maîtrisez les 3 étapes essentielles de la comptabilisation d'un contrat de location-financement</p>
+        <div class="badge">🎓 6e année Technicien en Comptabilité</div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar - Documents toujours visibles -->
+        <aside class="sidebar">
+            <!-- Contrat de leasing -->
+            <div class="document-card">
+                <div class="document-header">
+                    <div class="icon">📄</div>
+                    <h3>Contrat de Location-Financement</h3>
+                </div>
+                <div class="document-body">
+                    <div class="contract-content">
+                        <div class="contract-header">
+                            <div class="company">EB-LEASE N.V.</div>
+                            <div class="address">Burgstraat 170 - 9000 GENT</div>
+                        </div>
+                        
+                        <div class="contract-title">CONTRAT N° 9526542-512-95</div>
+                        
+                        <div class="contract-parties">
+                            <div class="party">
+                                <div class="party-label">Bailleur</div>
+                                <strong>EB-LEASE N.V.</strong><br>
+                                Burgstraat 170<br>
+                                9000 GENT
+                            </div>
+                            <div class="party">
+                                <div class="party-label">Locataire</div>
+                                <strong>TIB Transport</strong><br>
+                                Rue du Chemin de Fer 52<br>
+                                5000 NAMUR
+                            </div>
+                        </div>
+                        
+                        <div class="contract-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Matériel</span>
+                                <span class="detail-value">Photocopieuse</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Prix d'achat</span>
+                                <span class="highlight-value">2 256,25 €</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Durée du contrat</span>
+                                <span class="detail-value">3 ans</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Loyer trimestriel HTVA</span>
+                                <span class="detail-value">200,47 €</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">TVA (21%)</span>
+                                <span class="detail-value">42,10 €</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total TVAC</span>
+                                <span class="detail-value">242,57 €</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Valeur résiduelle</span>
+                                <span class="detail-value">118,75 €</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tableau d'amortissement -->
+            <div class="document-card">
+                <div class="document-header">
+                    <div class="icon">📊</div>
+                    <h3>Tableau d'Amortissement du Leasing</h3>
+                </div>
+                <div class="document-body">
+                    <div class="amort-table-container">
+                        <table class="amort-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th class="capital-header">Capital</th>
+                                    <th class="interest-header">Intérêts</th>
+                                    <th>Loyer</th>
+                                    <th>TVA</th>
+                                    <th class="total-header">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="year1">
+                                    <td><span class="year-badge y1">A1</span> 01/01</td>
+                                    <td class="capital-cell">177,90</td>
+                                    <td class="interest-cell">22,56</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year1">
+                                    <td><span class="year-badge y1">A1</span> 01/04</td>
+                                    <td class="capital-cell">179,68</td>
+                                    <td class="interest-cell">20,78</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year1">
+                                    <td><span class="year-badge y1">A1</span> 01/07</td>
+                                    <td class="capital-cell">181,48</td>
+                                    <td class="interest-cell">18,99</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year1">
+                                    <td><span class="year-badge y1">A1</span> 01/10</td>
+                                    <td class="capital-cell">183,29</td>
+                                    <td class="interest-cell">17,17</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year2">
+                                    <td><span class="year-badge y2">A2</span> 01/01</td>
+                                    <td class="capital-cell">185,13</td>
+                                    <td class="interest-cell">15,34</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year2">
+                                    <td><span class="year-badge y2">A2</span> 01/04</td>
+                                    <td class="capital-cell">186,98</td>
+                                    <td class="interest-cell">13,49</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year2">
+                                    <td><span class="year-badge y2">A2</span> 01/07</td>
+                                    <td class="capital-cell">188,85</td>
+                                    <td class="interest-cell">11,62</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year2">
+                                    <td><span class="year-badge y2">A2</span> 01/10</td>
+                                    <td class="capital-cell">190,74</td>
+                                    <td class="interest-cell">9,73</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year3">
+                                    <td><span class="year-badge y3">A3</span> 01/01</td>
+                                    <td class="capital-cell">192,64</td>
+                                    <td class="interest-cell">7,82</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year3">
+                                    <td><span class="year-badge y3">A3</span> 01/04</td>
+                                    <td class="capital-cell">194,57</td>
+                                    <td class="interest-cell">5,90</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year3">
+                                    <td><span class="year-badge y3">A3</span> 01/07</td>
+                                    <td class="capital-cell">196,52</td>
+                                    <td class="interest-cell">3,95</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                                <tr class="year3">
+                                    <td><span class="year-badge y3">A3</span> 01/10</td>
+                                    <td class="capital-cell">198,48</td>
+                                    <td class="interest-cell">1,98</td>
+                                    <td>200,47</td>
+                                    <td>42,10</td>
+                                    <td>242,57</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--year1);"></div>
+                            <span>Année 1</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--year2);"></div>
+                            <span>Année 2</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--year3);"></div>
+                            <span>Année 3</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--capital-color);"></div>
+                            <span>Capital</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--interest-color);"></div>
+                            <span>Intérêts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Énoncé -->
+            <section class="enonce-section">
+                <h2 class="enonce-title">📚 Mise en situation</h2>
+                <div class="enonce-content">
+                    <p>Tu es stagiaire dans l'entreprise de transport <strong>TIB</strong> et tu reçois un contrat de location-financement (leasing) pour une <strong>photocopieuse</strong>.</p>
+                    <p style="margin-top: 0.75rem;">Le leasing permet d'utiliser un bien sans l'acheter immédiatement. En comptabilité, cette opération génère <strong>3 types d'écritures</strong> que tu vas apprendre à maîtriser :</p>
+                    <ul style="margin-top: 0.75rem; margin-left: 1.5rem;">
+                        <li><strong>Étape 1 :</strong> Enregistrement du contrat (immobilisation + dettes CT/LT)</li>
+                        <li><strong>Étape 2 :</strong> Comptabilisation de la facture de loyer (capital + intérêts)</li>
+                        <li><strong>Étape 3 :</strong> Écritures de fin d'année (reclassement + amortissement)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Progress Steps -->
+            <div class="progress-container">
+                <div class="progress-step active" onclick="goToStep(1)" id="progressStep1">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Signature du contrat</span>
+                </div>
+                <div class="progress-step" onclick="goToStep(2)" id="progressStep2">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Première facture</span>
+                </div>
+                <div class="progress-step" onclick="goToStep(3)" id="progressStep3">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Fin d'exercice</span>
+                </div>
+            </div>
+
+            <!-- ÉTAPE 1 : Signature du contrat -->
+            <section class="step-section active" id="step1">
+                <div class="step-card">
+                    <div class="step-header">
+                        <h2>📝 Étape 1 : Signature du contrat de leasing</h2>
+                        <p>Enregistrement de l'immobilisation et distinction dette court terme / long terme</p>
+                    </div>
+                    <div class="step-body">
+                        <!-- Explication -->
+                        <div class="explanation-box">
+                            <h4>💡 Pourquoi cette écriture ?</h4>
+                            <p>Lors de la signature du contrat de leasing, l'entreprise obtient le <strong>droit d'utiliser</strong> un bien (la photocopieuse). Même si elle n'en est pas propriétaire, elle doit l'inscrire dans ses <strong>immobilisations</strong> (compte 25).</p>
+                            <p style="margin-top: 0.5rem;">En contrepartie, l'entreprise a une <strong>dette</strong> envers le bailleur. Cette dette se divise en :</p>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li><strong>Dette à court terme (4220)</strong> : la partie remboursable dans l'année</li>
+                                <li><strong>Dette à long terme (1720)</strong> : la partie remboursable après 1 an</li>
+                            </ul>
+                        </div>
+
+                        <!-- Mini-tableau pour montrer d'où viennent les montants -->
+                        <div class="mini-table-container">
+                            <div class="mini-table-title">📊 Comment obtenir les montants depuis le tableau d'amortissement ?</div>
+                            <table class="mini-table">
+                                <thead>
+                                    <tr>
+                                        <th>Période</th>
+                                        <th>Date</th>
+                                        <th style="background: rgba(14, 165, 233, 0.2);">Capital remboursé</th>
+                                        <th>Calcul</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="highlighted">
+                                        <td><span class="year-badge y1">Année 1</span></td>
+                                        <td>01/01</td>
+                                        <td class="capital-cell">177,90 €</td>
+                                        <td rowspan="4" style="background: #f0fdf4; font-weight: 600;">
+                                            Dette CT (4220)<br>
+                                            <span style="color: var(--capital-color);">= 722,35 €</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="highlighted">
+                                        <td><span class="year-badge y1">Année 1</span></td>
+                                        <td>01/04</td>
+                                        <td class="capital-cell">179,68 €</td>
+                                    </tr>
+                                    <tr class="highlighted">
+                                        <td><span class="year-badge y1">Année 1</span></td>
+                                        <td>01/07</td>
+                                        <td class="capital-cell">181,48 €</td>
+                                    </tr>
+                                    <tr class="highlighted">
+                                        <td><span class="year-badge y1">Année 1</span></td>
+                                        <td>01/10</td>
+                                        <td class="capital-cell">183,29 €</td>
+                                    </tr>
+                                    <tr class="sum-row">
+                                        <td colspan="2"><strong>Total Année 1</strong></td>
+                                        <td><strong>722,35 €</strong></td>
+                                        <td>→ Compte <strong>4220</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="calculation-box">
+                            <div class="calculation-title">🧮 Calcul des montants</div>
+                            <div class="calculation-line">
+                                <span class="calc-label">Prix total du bien (immobilisation)</span>
+                                <span class="calc-value total">2 256,25 €</span>
+                            </div>
+                            <div class="calculation-line">
+                                <span class="calc-label">Capital année 1 : 177,90 + 179,68 + 181,48 + 183,29</span>
+                                <span class="calc-value capital">= 722,35 €</span>
+                            </div>
+                            <div class="calculation-line">
+                                <span class="calc-label">Dette LT = Prix total - Dette CT</span>
+                                <span class="calc-value">2 256,25 - 722,35</span>
+                            </div>
+                            <div class="calc-result">
+                                Dette LT (1720) = 1 533,90 € | Dette CT (4220) = 722,35 €
+                            </div>
+                        </div>
+
+                        <!-- Écriture comptable à compléter -->
+                        <div class="accounting-entry">
+                            <div class="entry-header">
+                                <span>📖</span> Journal des Opérations Diverses (JOD) - Contrat de leasing
+                            </div>
+                            <table class="entry-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 15%;">Compte</th>
+                                        <th style="width: 40%;">Libellé</th>
+                                        <th style="width: 22.5%;">Débit</th>
+                                        <th style="width: 22.5%;">Crédit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" id="s1_compte1" placeholder="N° compte"></td>
+                                        <td><input type="text" id="s1_libelle1" placeholder="Libellé du compte"></td>
+                                        <td><input type="text" id="s1_debit1" placeholder="Montant"></td>
+                                        <td><input type="text" id="s1_credit1" placeholder=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" id="s1_compte2" placeholder="N° compte"></td>
+                                        <td><input type="text" id="s1_libelle2" placeholder="Libellé du compte"></td>
+                                        <td><input type="text" id="s1_debit2" placeholder=""></td>
+                                        <td><input type="text" id="s1_credit2" placeholder="Montant"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" id="s1_compte3" placeholder="N° compte"></td>
+                                        <td><input type="text" id="s1_libelle3" placeholder="Libellé du compte"></td>
+                                        <td><input type="text" id="s1_debit3" placeholder=""></td>
+                                        <td><input type="text" id="s1_credit3" placeholder="Montant"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="verifyStep1()">✅ Vérifier mes réponses</button>
+                            <button class="btn btn-secondary" onclick="showSolutionStep1()">💡 Voir la solution</button>
+                        </div>
+
+                        <div class="feedback" id="feedback1"></div>
+
+                        <div class="btn-group" id="nextBtn1" style="display: none;">
+                            <button class="btn btn-success" onclick="goToStep(2)">Passer à l'étape 2 →</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ÉTAPE 2 : Première facture -->
+            <section class="step-section" id="step2">
+                <div class="step-card">
+                    <div class="step-header" style="background: linear-gradient(135deg, var(--secondary) 0%, #5b21b6 100%);">
+                        <h2>🧾 Étape 2 : Comptabilisation de la première facture</h2>
+                        <p>Distinction entre le remboursement du capital et les intérêts</p>
+                    </div>
+                    <div class="step-body">
+                        <!-- Facture réaliste -->
+                        <div class="invoice-container">
+                            <div class="invoice-paper">
+                                <div class="invoice-header-bar">
+                                    <div>
+                                        <div class="invoice-company">EB-LEASE N.V.</div>
+                                        <div class="invoice-company-details">Burgstraat 170 - 9000 GENT<br>TVA: BE123 456 789</div>
+                                    </div>
+                                    <div class="invoice-number">
+                                        <div class="label">FACTURE</div>
+                                        <div class="number">N° 2521</div>
+                                    </div>
+                                </div>
+                                <div class="invoice-body">
+                                    <div class="invoice-parties">
+                                        <div class="invoice-party">
+                                            <h5>Fournisseur</h5>
+                                            <p><strong>EB-LEASE N.V.</strong><br>
+                                            Burgstraat 170<br>
+                                            9000 GENT</p>
+                                        </div>
+                                        <div class="invoice-party">
+                                            <h5>Client</h5>
+                                            <p><strong>TIB Transport</strong><br>
+                                            Rue du Chemin de Fer 52<br>
+                                            5000 NAMUR</p>
+                                        </div>
+                                    </div>
+                                    <div class="invoice-reference">
+                                        📋 Référence : Contrat de leasing <strong>N° 9526542-512-95</strong> | Date : 01/01/N
+                                    </div>
+                                    <table class="invoice-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>Montant</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Loyer trimestriel photocopieuse - 1er trimestre</td>
+                                                <td>200,47 €</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="invoice-totals">
+                                        <div class="invoice-total-row subtotal">
+                                            <span>Base imposable</span>
+                                            <span>200,47 €</span>
+                                        </div>
+                                        <div class="invoice-total-row tax">
+                                            <span>TVA 21%</span>
+                                            <span>42,10 €</span>
+                                        </div>
+                                        <div class="invoice-total-row grand-total">
+                                            <span>TOTAL TVAC</span>
+                                            <span>242,57 €</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="invoice-footer">
+                                    <span>RCG: 124 999</span>
+                                    <span>Fortis: 146-0537931-07</span>
+                                    <span>Échéance : à réception</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="explanation-box highlight-capital">
+                            <h4>💡 Comment comprendre le loyer ?</h4>
+                            <p>Chaque loyer de <strong>200,47 €</strong> se décompose en deux parties :</p>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li><span style="color: var(--capital-color); font-weight: 600;">Le capital remboursé</span> : c'est la partie qui réduit notre dette envers le bailleur</li>
+                                <li><span style="color: var(--interest-color); font-weight: 600;">Les intérêts</span> : c'est le coût du financement (charge financière - compte 6500)</li>
+                            </ul>
+                        </div>
+
+                        <!-- Mini-tableau pour la première facture -->
+                        <div class="mini-table-container">
+                            <div class="mini-table-title">📊 Où trouver les montants dans le tableau ? (1ère facture - 01/01)</div>
+                            <table class="mini-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th style="background: rgba(14, 165, 233, 0.3);">Capital</th>
+                                        <th style="background: rgba(245, 158, 11, 0.3);">Intérêts</th>
+                                        <th>Mensualité</th>
+                                        <th>TVA</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="highlighted">
+                                        <td><strong>01/01</strong></td>
+                                        <td class="capital-cell"><strong>177,90 €</strong></td>
+                                        <td class="interest-cell"><strong>22,56 €</strong></td>
+                                        <td>200,47 €</td>
+                                        <td>42,10 €</td>
+                                        <td>242,57 €</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="arrow-indicator">⬇️</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+                                <div style="background: rgba(14, 165, 233, 0.1); padding: 0.75rem; border-radius: 8px; text-align: center;">
+                                    <div style="color: var(--capital-color); font-weight: 700;">177,90 €</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">→ Compte 4220 (Débit)</div>
+                                </div>
+                                <div style="background: rgba(245, 158, 11, 0.1); padding: 0.75rem; border-radius: 8px; text-align: center;">
+                                    <div style="color: var(--interest-color); font-weight: 700;">22,56 €</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">→ Compte 6500 (Débit)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Écriture comptable -->
+                        <div class="accounting-entry">
+                            <div class="entry-header" style="background: linear-gradient(135deg, var(--secondary) 0%, #5b21b6 100%);">
+                                <span>📖</span> Journal des Achats (JA) - Facture de leasing
+                            </div>
+                            <table class="entry-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 15%;">Compte</th>
+                                        <th style="width: 40%;">Libellé</th>
+                                        <th style="width: 22.5%;">Débit</th>
+                                        <th style="width: 22.5%;">Crédit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" id="s2_compte1" placeholder="N° compte"></td>
+                                        <td><input type="text" id="s2_libelle1" placeholder="Libellé"></td>
+                                        <td><input type="text" id="s2_debit1" placeholder="Montant"></td>
+                                        <td><input type="text" id="s2_credit1" placeholder=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" id="s2_compte2" placeholder="N° compte"></td>
+                                        <td><input type="text" id="s2_libelle2" placeholder="Libellé"></td>
+                                        <td><input type="text" id="s2_debit2" placeholder="Montant"></td>
+                                        <td><input type="text" id="s2_credit2" placeholder=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" id="s2_compte3" placeholder="N° compte"></td>
+                                        <td><input type="text" id="s2_libelle3" placeholder="Libellé"></td>
+                                        <td><input type="text" id="s2_debit3" placeholder="Montant"></td>
+                                        <td><input type="text" id="s2_credit3" placeholder=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" id="s2_compte4" placeholder="N° compte"></td>
+                                        <td><input type="text" id="s2_libelle4" placeholder="Libellé"></td>
+                                        <td><input type="text" id="s2_debit4" placeholder=""></td>
+                                        <td><input type="text" id="s2_credit4" placeholder="Montant"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="verifyStep2()">✅ Vérifier mes réponses</button>
+                            <button class="btn btn-secondary" onclick="showSolutionStep2()">💡 Voir la solution</button>
+                        </div>
+
+                        <div class="feedback" id="feedback2"></div>
+
+                        <div class="btn-group" id="nextBtn2" style="display: none;">
+                            <button class="btn btn-success" onclick="goToStep(3)">Passer à l'étape 3 →</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ÉTAPE 3 : Fin d'exercice -->
+            <section class="step-section" id="step3">
+                <div class="step-card">
+                    <div class="step-header" style="background: linear-gradient(135deg, var(--warning) 0%, #c2410c 100%);">
+                        <h2>📅 Étape 3 : Écritures de fin d'exercice (31/12)</h2>
+                        <p>Reclassement de la dette + Amortissement du bien en leasing</p>
+                    </div>
+                    <div class="step-body">
+                        <div class="explanation-box" style="background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%); border-left-color: var(--warning);">
+                            <h4>💡 Pourquoi 2 écritures en fin d'année ?</h4>
+                            <p>À la clôture de l'exercice comptable (31/12), il faut effectuer <strong>2 opérations importantes</strong> :</p>
+                            <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li><strong>Reclassement de la dette</strong> : la dette à long terme de l'année suivante devient une dette à court terme</li>
+                                <li><strong>Amortissement du bien</strong> : comme toute immobilisation, le bien en leasing doit être amorti</li>
+                            </ol>
+                        </div>
+
+                        <!-- SECTION A : Reclassement de la dette -->
+                        <div class="sub-section">
+                            <h3 class="sub-section-title reclassement">
+                                <span>🔄</span> A. Reclassement de la dette LT → CT
+                            </h3>
+
+                            <div class="mini-table-container">
+                                <div class="mini-table-title">📊 Capital de l'année 2 à reclasser</div>
+                                <table class="mini-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Période</th>
+                                            <th>Date</th>
+                                            <th style="background: rgba(139, 92, 246, 0.2);">Capital remboursé</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span class="year-badge y2">Année 2</span></td>
+                                            <td>01/01</td>
+                                            <td class="capital-cell">185,13 €</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="year-badge y2">Année 2</span></td>
+                                            <td>01/04</td>
+                                            <td class="capital-cell">186,98 €</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="year-badge y2">Année 2</span></td>
+                                            <td>01/07</td>
+                                            <td class="capital-cell">188,85 €</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="year-badge y2">Année 2</span></td>
+                                            <td>01/10</td>
+                                            <td class="capital-cell">190,74 €</td>
+                                        </tr>
+                                        <tr class="sum-row">
+                                            <td colspan="2"><strong>Total Année 2</strong></td>
+                                            <td><strong style="color: var(--year2);">751,70 €</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--text-secondary);">
+                                    ➡️ Ce montant doit passer du compte <strong>1720</strong> (dette LT) vers le compte <strong>4220</strong> (dette CT)
+                                </p>
+                            </div>
+
+                            <div class="accounting-entry">
+                                <div class="entry-header" style="background: linear-gradient(135deg, var(--warning) 0%, #c2410c 100%);">
+                                    <span>📖</span> JOD 31/12 - Reclassement de la dette
+                                </div>
+                                <table class="entry-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 15%;">Compte</th>
+                                            <th style="width: 40%;">Libellé</th>
+                                            <th style="width: 22.5%;">Débit</th>
+                                            <th style="width: 22.5%;">Crédit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" id="s3a_compte1" placeholder="N° compte"></td>
+                                            <td><input type="text" id="s3a_libelle1" placeholder="Libellé"></td>
+                                            <td><input type="text" id="s3a_debit1" placeholder="Montant"></td>
+                                            <td><input type="text" id="s3a_credit1" placeholder=""></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" id="s3a_compte2" placeholder="N° compte"></td>
+                                            <td><input type="text" id="s3a_libelle2" placeholder="Libellé"></td>
+                                            <td><input type="text" id="s3a_debit2" placeholder=""></td>
+                                            <td><input type="text" id="s3a_credit2" placeholder="Montant"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="btn-group">
+                                <button class="btn btn-warning" onclick="verifyStep3A()">✅ Vérifier le reclassement</button>
+                                <button class="btn btn-secondary" onclick="showSolutionStep3A()">💡 Voir la solution</button>
+                            </div>
+
+                            <div class="feedback" id="feedback3a"></div>
+                        </div>
+
+                        <hr class="section-divider">
+
+                        <!-- SECTION B : Amortissement -->
+                        <div class="sub-section">
+                            <h3 class="sub-section-title amortissement">
+                                <span>📉</span> B. Amortissement du bien en leasing
+                            </h3>
+
+                            <div class="calculation-box">
+                                <div class="calculation-title">🧮 Calcul de l'amortissement annuel</div>
+                                <div class="calculation-line">
+                                    <span class="calc-label">Valeur du bien</span>
+                                    <span class="calc-value total">2 256,25 €</span>
+                                </div>
+                                <div class="calculation-line">
+                                    <span class="calc-label">Durée d'amortissement</span>
+                                    <span class="calc-value">3 ans</span>
+                                </div>
+                                <div class="calculation-line">
+                                    <span class="calc-label">Amortissement annuel = 2 256,25 ÷ 3</span>
+                                    <span class="calc-value capital">= 752,08 €</span>
+                                </div>
+                                <div class="calc-result">
+                                    Dotation aux amortissements = 752,08 €/an
+                                </div>
+                            </div>
+
+                            <div class="accounting-entry">
+                                <div class="entry-header" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">
+                                    <span>📖</span> JOD 31/12 - Amortissement du bien
+                                </div>
+                                <table class="entry-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 15%;">Compte</th>
+                                            <th style="width: 40%;">Libellé</th>
+                                            <th style="width: 22.5%;">Débit</th>
+                                            <th style="width: 22.5%;">Crédit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" id="s3b_compte1" placeholder="N° compte"></td>
+                                            <td><input type="text" id="s3b_libelle1" placeholder="Libellé"></td>
+                                            <td><input type="text" id="s3b_debit1" placeholder="Montant"></td>
+                                            <td><input type="text" id="s3b_credit1" placeholder=""></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" id="s3b_compte2" placeholder="N° compte"></td>
+                                            <td><input type="text" id="s3b_libelle2" placeholder="Libellé"></td>
+                                            <td><input type="text" id="s3b_debit2" placeholder=""></td>
+                                            <td><input type="text" id="s3b_credit2" placeholder="Montant"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="btn-group">
+                                <button class="btn btn-success" onclick="verifyStep3B()">✅ Vérifier l'amortissement</button>
+                                <button class="btn btn-secondary" onclick="showSolutionStep3B()">💡 Voir la solution</button>
+                            </div>
+
+                            <div class="feedback" id="feedback3b"></div>
+                        </div>
+
+                        <!-- Badge de complétion -->
+                        <div class="completion-badge" id="completionBadge">
+                            <div class="trophy">🏆</div>
+                            <h3>Félicitations !</h3>
+                            <p>Tu as maîtrisé les 3 étapes de la comptabilisation du leasing financier !</p>
+                            <p style="margin-top: 1rem; font-weight: 600;">Tu es maintenant capable de :</p>
+                            <ul style="text-align: left; max-width: 400px; margin: 1rem auto; color: #78350f;">
+                                <li>✅ Enregistrer un contrat de leasing</li>
+                                <li>✅ Distinguer dette CT et dette LT</li>
+                                <li>✅ Comptabiliser les factures de loyer</li>
+                                <li>✅ Effectuer le reclassement de fin d'année</li>
+                                <li>✅ Amortir un bien en location-financement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Variables de suivi
+        let completedSteps = [false, false, false];
+        let step3ACompleted = false;
+        let step3BCompleted = false;
+
+        // Navigation entre les étapes
+        function goToStep(stepNum) {
+            document.querySelectorAll('.step-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.getElementById(`step${stepNum}`).classList.add('active');
+            
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                step.classList.remove('active');
+                if (completedSteps[index]) {
+                    step.classList.add('completed');
+                }
+            });
+            document.getElementById(`progressStep${stepNum}`).classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Normaliser les montants pour la comparaison
+        function normalizeAmount(value) {
+            if (!value) return '';
+            return value.toString()
+                .replace(/\s/g, '')
+                .replace(',', '.')
+                .replace('€', '')
+                .trim();
+        }
+
+        // Vérifier si deux montants sont équivalents
+        function amountsMatch(input, expected) {
+            const normalizedInput = normalizeAmount(input);
+            const normalizedExpected = normalizeAmount(expected);
+            
+            if (normalizedInput === normalizedExpected) return true;
+            
+            const numInput = parseFloat(normalizedInput);
+            const numExpected = parseFloat(normalizedExpected);
+            
+            if (!isNaN(numInput) && !isNaN(numExpected)) {
+                return Math.abs(numInput - numExpected) < 0.02;
+            }
+            
+            return false;
+        }
+
+        // Vérifier si le compte est correct
+        function accountMatches(input, expected) {
+            const normalizedInput = input.toString().trim();
+            const normalizedExpected = expected.toString().trim();
+            return normalizedInput === normalizedExpected;
+        }
+
+        // Vérifier Étape 1
+        function verifyStep1() {
+            let correct = 0;
+            let total = 6;
+
+            const c1 = document.getElementById('s1_compte1');
+            if (accountMatches(c1.value, '2510')) {
+                c1.classList.remove('incorrect');
+                c1.classList.add('correct');
+                correct++;
+            } else {
+                c1.classList.remove('correct');
+                c1.classList.add('incorrect');
+            }
+
+            const d1 = document.getElementById('s1_debit1');
+            if (amountsMatch(d1.value, '2256.25')) {
+                d1.classList.remove('incorrect');
+                d1.classList.add('correct');
+                correct++;
+            } else {
+                d1.classList.remove('correct');
+                d1.classList.add('incorrect');
+            }
+
+            const c2 = document.getElementById('s1_compte2');
+            if (accountMatches(c2.value, '1720')) {
+                c2.classList.remove('incorrect');
+                c2.classList.add('correct');
+                correct++;
+            } else {
+                c2.classList.remove('correct');
+                c2.classList.add('incorrect');
+            }
+
+            const cr2 = document.getElementById('s1_credit2');
+            if (amountsMatch(cr2.value, '1533.90')) {
+                cr2.classList.remove('incorrect');
+                cr2.classList.add('correct');
+                correct++;
+            } else {
+                cr2.classList.remove('correct');
+                cr2.classList.add('incorrect');
+            }
+
+            const c3 = document.getElementById('s1_compte3');
+            if (accountMatches(c3.value, '4220')) {
+                c3.classList.remove('incorrect');
+                c3.classList.add('correct');
+                correct++;
+            } else {
+                c3.classList.remove('correct');
+                c3.classList.add('incorrect');
+            }
+
+            const cr3 = document.getElementById('s1_credit3');
+            if (amountsMatch(cr3.value, '722.35')) {
+                cr3.classList.remove('incorrect');
+                cr3.classList.add('correct');
+                correct++;
+            } else {
+                cr3.classList.remove('correct');
+                cr3.classList.add('incorrect');
+            }
+
+            const feedback = document.getElementById('feedback1');
+            feedback.classList.add('show');
+            
+            if (correct === total) {
+                feedback.className = 'feedback show success';
+                feedback.innerHTML = '🎉 Parfait ! Tu as correctement enregistré le contrat de leasing !';
+                completedSteps[0] = true;
+                document.getElementById('nextBtn1').style.display = 'flex';
+                document.getElementById('progressStep1').classList.add('completed');
+            } else {
+                feedback.className = 'feedback show error';
+                feedback.innerHTML = `⚠️ ${correct}/${total} réponses correctes. Vérifie les cases en rouge.`;
+            }
+        }
+
+        // Solution Étape 1
+        function showSolutionStep1() {
+            document.getElementById('s1_compte1').value = '2510';
+            document.getElementById('s1_libelle1').value = 'Immobilisation en location financement';
+            document.getElementById('s1_debit1').value = '2256,25';
+            document.getElementById('s1_credit1').value = '';
+            
+            document.getElementById('s1_compte2').value = '1720';
+            document.getElementById('s1_libelle2').value = 'à Dettes en location financement';
+            document.getElementById('s1_debit2').value = '';
+            document.getElementById('s1_credit2').value = '1533,90';
+            
+            document.getElementById('s1_compte3').value = '4220';
+            document.getElementById('s1_libelle3').value = 'à Dettes à +1 an échéant LF';
+            document.getElementById('s1_debit3').value = '';
+            document.getElementById('s1_credit3').value = '722,35';
+
+            document.querySelectorAll('[id^="s1_"]').forEach(input => {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+            });
+
+            completedSteps[0] = true;
+            document.getElementById('nextBtn1').style.display = 'flex';
+            
+            const feedback = document.getElementById('feedback1');
+            feedback.className = 'feedback show info';
+            feedback.innerHTML = '💡 Voici la solution. Étudie bien les montants et leur provenance dans le tableau !';
+        }
+
+        // Vérifier Étape 2
+        function verifyStep2() {
+            let correct = 0;
+            let total = 8;
+
+            const c1 = document.getElementById('s2_compte1');
+            if (accountMatches(c1.value, '4220')) {
+                c1.classList.remove('incorrect');
+                c1.classList.add('correct');
+                correct++;
+            } else {
+                c1.classList.remove('correct');
+                c1.classList.add('incorrect');
+            }
+
+            const d1 = document.getElementById('s2_debit1');
+            if (amountsMatch(d1.value, '177.90')) {
+                d1.classList.remove('incorrect');
+                d1.classList.add('correct');
+                correct++;
+            } else {
+                d1.classList.remove('correct');
+                d1.classList.add('incorrect');
+            }
+
+            const c2 = document.getElementById('s2_compte2');
+            if (accountMatches(c2.value, '6500')) {
+                c2.classList.remove('incorrect');
+                c2.classList.add('correct');
+                correct++;
+            } else {
+                c2.classList.remove('correct');
+                c2.classList.add('incorrect');
+            }
+
+            const d2 = document.getElementById('s2_debit2');
+            if (amountsMatch(d2.value, '22.56')) {
+                d2.classList.remove('incorrect');
+                d2.classList.add('correct');
+                correct++;
+            } else {
+                d2.classList.remove('correct');
+                d2.classList.add('incorrect');
+            }
+
+            const c3 = document.getElementById('s2_compte3');
+            if (accountMatches(c3.value, '4110')) {
+                c3.classList.remove('incorrect');
+                c3.classList.add('correct');
+                correct++;
+            } else {
+                c3.classList.remove('correct');
+                c3.classList.add('incorrect');
+            }
+
+            const d3 = document.getElementById('s2_debit3');
+            if (amountsMatch(d3.value, '42.10')) {
+                d3.classList.remove('incorrect');
+                d3.classList.add('correct');
+                correct++;
+            } else {
+                d3.classList.remove('correct');
+                d3.classList.add('incorrect');
+            }
+
+            const c4 = document.getElementById('s2_compte4');
+            if (c4.value.includes('44') || c4.value.toLowerCase().includes('four')) {
+                c4.classList.remove('incorrect');
+                c4.classList.add('correct');
+                correct++;
+            } else {
+                c4.classList.remove('correct');
+                c4.classList.add('incorrect');
+            }
+
+            const cr4 = document.getElementById('s2_credit4');
+            if (amountsMatch(cr4.value, '242.57')) {
+                cr4.classList.remove('incorrect');
+                cr4.classList.add('correct');
+                correct++;
+            } else {
+                cr4.classList.remove('correct');
+                cr4.classList.add('incorrect');
+            }
+
+            const feedback = document.getElementById('feedback2');
+            feedback.classList.add('show');
+            
+            if (correct >= total - 1) {
+                feedback.className = 'feedback show success';
+                feedback.innerHTML = '🎉 Excellent ! Tu sais maintenant comptabiliser une facture de leasing !';
+                completedSteps[1] = true;
+                document.getElementById('nextBtn2').style.display = 'flex';
+                document.getElementById('progressStep2').classList.add('completed');
+            } else {
+                feedback.className = 'feedback show error';
+                feedback.innerHTML = `⚠️ ${correct}/${total} réponses correctes. Vérifie les cases en rouge.`;
+            }
+        }
+
+        // Solution Étape 2
+        function showSolutionStep2() {
+            document.getElementById('s2_compte1').value = '4220';
+            document.getElementById('s2_libelle1').value = 'Dettes à +1 an échéant LF';
+            document.getElementById('s2_debit1').value = '177,90';
+            document.getElementById('s2_credit1').value = '';
+            
+            document.getElementById('s2_compte2').value = '6500';
+            document.getElementById('s2_libelle2').value = 'Charges des dettes';
+            document.getElementById('s2_debit2').value = '22,56';
+            document.getElementById('s2_credit2').value = '';
+            
+            document.getElementById('s2_compte3').value = '4110';
+            document.getElementById('s2_libelle3').value = 'TVA sur achats';
+            document.getElementById('s2_debit3').value = '42,10';
+            document.getElementById('s2_credit3').value = '';
+            
+            document.getElementById('s2_compte4').value = '440';
+            document.getElementById('s2_libelle4').value = 'à Fournisseur EB-LEASE NV';
+            document.getElementById('s2_debit4').value = '';
+            document.getElementById('s2_credit4').value = '242,57';
+
+            document.querySelectorAll('[id^="s2_"]').forEach(input => {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+            });
+
+            completedSteps[1] = true;
+            document.getElementById('nextBtn2').style.display = 'flex';
+            
+            const feedback = document.getElementById('feedback2');
+            feedback.className = 'feedback show info';
+            feedback.innerHTML = '💡 Voici la solution. Note bien que le capital (177,90 €) réduit la dette, tandis que les intérêts (22,56 €) sont une charge !';
+        }
+
+        // Vérifier Étape 3A - Reclassement
+        function verifyStep3A() {
+            let correct = 0;
+            let total = 4;
+
+            const a_c1 = document.getElementById('s3a_compte1');
+            if (accountMatches(a_c1.value, '1720')) {
+                a_c1.classList.remove('incorrect');
+                a_c1.classList.add('correct');
+                correct++;
+            } else {
+                a_c1.classList.remove('correct');
+                a_c1.classList.add('incorrect');
+            }
+
+            const a_d1 = document.getElementById('s3a_debit1');
+            if (amountsMatch(a_d1.value, '751.70')) {
+                a_d1.classList.remove('incorrect');
+                a_d1.classList.add('correct');
+                correct++;
+            } else {
+                a_d1.classList.remove('correct');
+                a_d1.classList.add('incorrect');
+            }
+
+            const a_c2 = document.getElementById('s3a_compte2');
+            if (accountMatches(a_c2.value, '4220')) {
+                a_c2.classList.remove('incorrect');
+                a_c2.classList.add('correct');
+                correct++;
+            } else {
+                a_c2.classList.remove('correct');
+                a_c2.classList.add('incorrect');
+            }
+
+            const a_cr2 = document.getElementById('s3a_credit2');
+            if (amountsMatch(a_cr2.value, '751.70')) {
+                a_cr2.classList.remove('incorrect');
+                a_cr2.classList.add('correct');
+                correct++;
+            } else {
+                a_cr2.classList.remove('correct');
+                a_cr2.classList.add('incorrect');
+            }
+
+            const feedback = document.getElementById('feedback3a');
+            feedback.classList.add('show');
+            
+            if (correct === total) {
+                feedback.className = 'feedback show success';
+                feedback.innerHTML = '🎉 Parfait ! Le reclassement de la dette est correct !';
+                step3ACompleted = true;
+                checkStep3Completion();
+            } else {
+                feedback.className = 'feedback show error';
+                feedback.innerHTML = `⚠️ ${correct}/${total} réponses correctes. Vérifie les cases en rouge.`;
+            }
+        }
+
+        // Solution Étape 3A
+        function showSolutionStep3A() {
+            document.getElementById('s3a_compte1').value = '1720';
+            document.getElementById('s3a_libelle1').value = 'Dettes en location financement';
+            document.getElementById('s3a_debit1').value = '751,70';
+            document.getElementById('s3a_credit1').value = '';
+            
+            document.getElementById('s3a_compte2').value = '4220';
+            document.getElementById('s3a_libelle2').value = 'à Dettes à +1 an échéant LF';
+            document.getElementById('s3a_debit2').value = '';
+            document.getElementById('s3a_credit2').value = '751,70';
+
+            document.querySelectorAll('[id^="s3a_"]').forEach(input => {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+            });
+
+            step3ACompleted = true;
+            
+            const feedback = document.getElementById('feedback3a');
+            feedback.className = 'feedback show info';
+            feedback.innerHTML = '💡 Le reclassement (751,70 €) correspond à la somme du capital de l\'année 2 !';
+            
+            checkStep3Completion();
+        }
+
+        // Vérifier Étape 3B - Amortissement
+        function verifyStep3B() {
+            let correct = 0;
+            let total = 4;
+
+            const b_c1 = document.getElementById('s3b_compte1');
+            if (accountMatches(b_c1.value, '6302')) {
+                b_c1.classList.remove('incorrect');
+                b_c1.classList.add('correct');
+                correct++;
+            } else {
+                b_c1.classList.remove('correct');
+                b_c1.classList.add('incorrect');
+            }
+
+            const b_d1 = document.getElementById('s3b_debit1');
+            if (amountsMatch(b_d1.value, '752.08')) {
+                b_d1.classList.remove('incorrect');
+                b_d1.classList.add('correct');
+                correct++;
+            } else {
+                b_d1.classList.remove('correct');
+                b_d1.classList.add('incorrect');
+            }
+
+            const b_c2 = document.getElementById('s3b_compte2');
+            if (accountMatches(b_c2.value, '2519')) {
+                b_c2.classList.remove('incorrect');
+                b_c2.classList.add('correct');
+                correct++;
+            } else {
+                b_c2.classList.remove('correct');
+                b_c2.classList.add('incorrect');
+            }
+
+            const b_cr2 = document.getElementById('s3b_credit2');
+            if (amountsMatch(b_cr2.value, '752.08')) {
+                b_cr2.classList.remove('incorrect');
+                b_cr2.classList.add('correct');
+                correct++;
+            } else {
+                b_cr2.classList.remove('correct');
+                b_cr2.classList.add('incorrect');
+            }
+
+            const feedback = document.getElementById('feedback3b');
+            feedback.classList.add('show');
+            
+            if (correct === total) {
+                feedback.className = 'feedback show success';
+                feedback.innerHTML = '🎉 Excellent ! L\'amortissement est correctement comptabilisé !';
+                step3BCompleted = true;
+                checkStep3Completion();
+            } else {
+                feedback.className = 'feedback show error';
+                feedback.innerHTML = `⚠️ ${correct}/${total} réponses correctes. Vérifie les cases en rouge.`;
+            }
+        }
+
+        // Solution Étape 3B
+        function showSolutionStep3B() {
+            document.getElementById('s3b_compte1').value = '6302';
+            document.getElementById('s3b_libelle1').value = 'Dotation aux amortissements sur IC';
+            document.getElementById('s3b_debit1').value = '752,08';
+            document.getElementById('s3b_credit1').value = '';
+            
+            document.getElementById('s3b_compte2').value = '2519';
+            document.getElementById('s3b_libelle2').value = 'à Matériel détenu en LF amort acté';
+            document.getElementById('s3b_debit2').value = '';
+            document.getElementById('s3b_credit2').value = '752,08';
+
+            document.querySelectorAll('[id^="s3b_"]').forEach(input => {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+            });
+
+            step3BCompleted = true;
+            
+            const feedback = document.getElementById('feedback3b');
+            feedback.className = 'feedback show info';
+            feedback.innerHTML = '💡 L\'amortissement annuel = 2 256,25 € ÷ 3 ans = 752,08 €';
+            
+            checkStep3Completion();
+        }
+
+        // Vérifier si l'étape 3 est complète
+        function checkStep3Completion() {
+            if (step3ACompleted && step3BCompleted) {
+                completedSteps[2] = true;
+                document.getElementById('progressStep3').classList.add('completed');
+                document.getElementById('completionBadge').classList.add('show');
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    for (let i = 1; i <= 3; i++) {
+                        if (document.getElementById(`step${i}`).classList.contains('active')) {
+                            if (i === 1) verifyStep1();
+                            else if (i === 2) verifyStep2();
+                            break;
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
